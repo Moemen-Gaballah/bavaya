@@ -133,6 +133,7 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
+        $ticket->replies()->delete();
         $ticket->delete();
 
         Session::flash('success', "done delete ticket successfully.");

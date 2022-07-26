@@ -15,15 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $data = [];
-        for($i= 0; $i <= 8; $i++){
-            $data[] = [
-                'name' => 'user0'.$i,
-                'email' => "user0$i@gmail.com",
-                'password' => Hash::make('12345678'),
-            ];
-        }
 
-        DB::table('users')->insert($data);
     }
 }

@@ -28,8 +28,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile');
+//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+//    Route::put('/profile', [ProfileController::class, 'update'])->name('profile');
 
 
     Route::resource('tickets', TicketController::class);
@@ -37,6 +37,4 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('tickets/{id}/replies/store', [ReplyController::class, 'store'])->name('replies.store');
 
-//    Route::get('transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-//    Route::post('transactions', [TransactionController::class, 'store'])->name('transactions.store');
 });
