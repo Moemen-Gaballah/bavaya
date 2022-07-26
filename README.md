@@ -1,98 +1,105 @@
-# PHP Laravel Developer Task
-The system acts as online payment processor server.
+# Docker - Laravel
 
+![Docker](https://github.com/supermavster/docker-laravel-8/workflows/Docker/badge.svg)
 
-## Installation
+![Image](https://repository-images.githubusercontent.com/309769351/1c0dfc80-1def-11eb-9e5c-641da3e3c9b4)
 
-Clone the repo `git clone https://github.com/Moemen-Gaballah/zarcony-task.git` and `cd` into it
+A pretty simplified Docker Compose workflow that sets up a LEMP (Linux, NGINX, MySQL, PHP) network of containers for local Laravel development.
 
-`composer install`
+## Ports
 
-Rename or copy `.env.example` file to `.env`
+Ports used in the project:
+| Software | Port |
+|-------------- | -------------- |
+| **nginx** | 8080 |
+| **phpmyadmin** | 8081 |
+| **mysql** | 3306 |
+| **php** | 9000 |
+| **xdebug** | 9001 |
+| **redis** | 6379 |
 
-`php artisan key:generate`
+## Use
 
-Set your database credentials in your `.env` file
+To get started, make sure you have [Docker installed](https://docs.docker.com/) on your system and [Docker Compose](https://docs.docker.com/compose/install/), and then clone this repository.
 
+1. Clone this project:
 
-`composer install`
+   ```sh
+   git clone https://github.com/supermavster/docker-laravel-8.git
+   ```
 
-`npm install`
+2. Inside the folder `docker-laravel-8` and Generate your own `.env` to docker compose with the next command:
 
-`npm run dev`
+   ```sh
+   cp .env.example .env
+   ```
 
-`php artisan migrate:fresh --seed`
+3. You need **Create** or **Put** your laravel project in the folder source; to create follow the next instructions [Here](source/README.md).
 
-`php artisan serve`
+4. Build the project whit the next commands:
 
-`http://127.0.0.1:8000/`
+   ```sh
+   docker-compose up --build
+   ```
 
-`http://127.0.0.1:8000/admin/login`
+---
 
-Admin Email/Password: `admin@admin.com/admin`
+## Remember
 
-### Done
+The configuration of the database **must be the same on both sides** .
 
-- [x] Admin Login Page
-- [x] Admin Users List
-- [x] Admin System logs
-- [x] Admin Transactions list +500,000 record.
-- [x] User Login/Register & Edit Profile
-- [x] User checkout (create transaction - transfer)
-- [x] User List Transaction.
-- [x] Admin page report Graph transactions list with cache.
+```dotenv
+# .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_name
+DB_USERNAME=db_user
+DB_PASSWORD=db_password
+DB_ROOT_PASSWORD=secret
+```
 
-### TODO
-- [] Seperate logic from controller to service.
-- [] Page Report.
-- [] Graph transaction list with Materialized view.
-- [] Add awesome dashboard
-- [] Unit test
-- etc...
+```dotenv
+# source/.env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=db_name
+DB_USERNAME=db_user
+DB_PASSWORD=db_password
+```
 
+The only change is the `DB_HOST` in the `source/.env` where is called to the container of `mysql`:
 
-## Demo
+```dotenv
+# source/.env
+DB_HOST=mysql
+```
 
-[Demo Video] (https://drive.google.com/file/d/1nhI4BaaRNID06AusBRX0N1Rde3BKXa-R/view)
+---
 
-`Admin All Users.`
+## Special Cases
 
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/admin%20-%20all%20users.png)
+To Down and remove the volumes we use the next command:
 
-`Admin All Transactions +500,000 record.`
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/admin%20-%20all%20trasnactions.png)
+```sh
+docker-compose down -v
+```
 
-`Admin Filter Search Transaction`
+Update Composer:
 
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/filter%20transaction%20admin.png)
+```sh
+docker-compose run --rm composer update
+```
 
+Run compiler (Webpack.mix.js) or Show the view compiler in node:
 
-`Admin Report Transaction not Complete.`
+```sh
+docker-compose run --rm npm run dev
+```
 
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/reports%20-%20500%2C000%20record.png)
+Run all migrations:
 
-`User Update Profile`
-
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/update%20profile.png)
-
-`User create transaction`
-
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/create_transaction.png)
-
-
-`User Validation Transaction`
-
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/validation%20transaction.png)
-
-`Admin Logs`
-
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/logs%20-%20admin%20.png)
-
-
-`ERD (Entity Relationship Diagram) `
-
-![image](https://raw.githubusercontent.com/Moemen-Gaballah/zarcony-task/main/public/demo/entity%20relationship%20diagram%20(ERD).png)
-
-
-
-# bavaya
+```sh
+docker-compose run --rm artisan migrate
+```
